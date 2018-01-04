@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>upload模块快速使用</title>
+    <link rel="stylesheet" href="lib/layui/css/layui.css" media="all">
+</head>
+<body>
+
+<!--<button type="button" class="layui-btn" id="test1">
+    <i class="layui-icon">&#xe67c;</i>上传图片
+</button>-->
+<ul id="demo"></ul>
+<input type="file" name="file" class="layui-btn-sm">
+<script src="js/jquery-1.9.1.js"></script>
+<script src="lib/layui/layui.js"></script>
+<script src="json/tree.js"></script>
+<script>
+    layui.use(['upload','tree'], function(){
+        layui.upload({
+            url: '上传接口url'
+            ,success: function(res){
+                console.log(res); //上传成功返回值，必须为json格式
+            }
+        });
+
+        layui.tree({
+            elem: '#demo' //传入元素选择器
+            , nodes: children
+        });
+    });
+</script>
+</body>
+</html>
