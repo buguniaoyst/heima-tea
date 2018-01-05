@@ -11,6 +11,12 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/lib/layui/lay/modules/laypage.js"></script>
     <script type="text/javascript"
             src="${pageContext.request.contextPath}/js/common.js"></script>
+    <style type="text/css">
+
+        .layui-layer-code .layui-layer-content{
+            background-color: #282b2e;
+        }
+    </style>
 </head>
 <body>
 <div style=" margin: 40px auto 6px 0px;" >
@@ -23,15 +29,22 @@
         <div id="itemArea" style="margin-left: 10px">
 
         </div>
-        <div>
-            <ul id="demo"></ul>
-
-        </div>
-
         <div class="layui-form-item">
-            <input type="button" id="submitTest" class="layui-btn " value="提交，批改下一份">
+            <div class="layui-input-inline">
+                <input type="button" id="submitTest" class="layui-btn " value="提交，批改下一份">
+
+            </div>
+            <div class="layui-input-inline">
             <button class="layui-btn "   type="reset" >重置</button>
+            </div>
+
+
+
         </div>
+
+        <%--<div class="layui-form-item">--%>
+           <%----%>
+        <%--</div>--%>
     </form>
 </div>
 <script src="${pageContext.request.contextPath}/json/tree.js"></script>
@@ -128,10 +141,9 @@
                 "    <div class=\"layui-input-inline\">\n" +
                 "      <input type=\"number\" name=\"itemScore\" lay-verify=\"required\" placeholder=\"请输入分值\" autocomplete=\"off\" class=\"layui-input\">\n" +
                 "    </div>\n" +
+                "<ul id="+'demo'+items.id+"></ul>\n" +
                 "  </div>");
-            var openZipDiv = $("    <div class=\"layui-input-inline\">\n" +
-                             "      <input type='button' value='打开附件' onclick="+'showZipTree("'+answer.zipPath+'")'+"  class=\"layui-btn layui-btn-warm\">\n" +
-                            "    </div>\n" );
+            var openZipDiv = $('<div><input type="button" value="打开附件" onclick="showZipTree(\''+answer.zipPath+'\','+items.id+')"  class="layui-btn layui-btn-warm"></div>' );
             if(answer.zipPath) {
                 openZipDiv.appendTo(scoreSpan);
             }
@@ -172,27 +184,6 @@
                         totalScore+=new Number(itemScore);
                         console.log(scoreInfos);
                     }
-//                    _divs.each(function () {
-//                        var itemId = $(this).attr('id');
-//                        var itemScore = $(_divs.get(0)).find('input')[0].value;
-//                        if(!itemScore){
-//                            submitTestFlag = false;
-//                            layer.alert('有未批阅的题目，请检查！', {
-//                                skin: 'layui-layer-molv' //样式类名
-//                                ,closeBtn: 0
-//                            });
-//                            return;
-//                        }
-//                        var scoreInfo = {};
-//                        var testId = $("#stuTestName").attr("testId");
-//                        scoreInfo.stuId=stuId;
-//                        scoreInfo.itemId=itemId;
-//                        scoreInfo.itemScore=itemScore;
-//                        scoreInfo.testId = testId;
-//                        scoreInfos.push(scoreInfo);
-//                        totalScore+=new Number(itemScore);
-//                        console.log(scoreInfos);
-//                    })
                 }
 
                 //封装testRecord信息
@@ -232,14 +223,19 @@
 
     });
 
-    function showZipTree(zipPath) {
+    var itemFlag = "";
+    function showZipTree(zipPath,itemId) {
+        if(itemId == itemFlag) {
+            return;
+        }
         $.post("${pageContext.request.contextPath}/rest/answer/getZipDirs",{zipPath:zipPath},function (data) {
             console.log(data);
+            itemFlag = itemId;
             children = JSON.parse(data.nodes);
             layui.use(['tree','layer','form'],function () {
                 var form = layui.form;
                 layui.tree({
-                    elem: '#demo' //传入元素选择器
+                    elem: '#demo'+itemId //传入元素选择器
                     ,skin: 'notepad'
                     ,encode:true
                     , nodes: children
@@ -249,7 +245,6 @@
                         if(node.children.length == 0 ){
                             $.post("${pageContext.request.contextPath}/rest/answer/getFileContent",{filePath:node.alias},function (data) {
                                 if(data) {
-                                    hljs.initHighlightingOnLoad();
                                     var _pre = '<pre  id="codeContent">\n' +
                                                 '<code >' +data+
                                                 '</code>'
@@ -257,13 +252,14 @@
                                     layer.open({
                                         title:'查看代码',
                                         type: 1,
-                                        skin: 'layui-layer-demo', //样式类名
-                                        area: ['750px', '600px'],
+                                        skin: 'layui-layer-code', //样式类名
+                                        area: ['80%', '80%'],
                                         closeBtn: 1, //不显示关闭按钮
                                         anim: 2,
                                         shadeClose: true, //开启遮罩关闭
                                         content: _pre,
                                         success: function(layero, index){
+
                                             $('pre code').each(function(i, block) {
                                                 hljs.highlightBlock(block);
                                             });
@@ -282,6 +278,16 @@
             });
         });
     }
+
+    /**
+     * 下载附件
+     */
+    function downloadZipFile(filePath) {
+        $.post("${pageContext.request.contextPath}/rest/answer/downloadZip",{filePath:filePath},function (data) {
+            console.log(data);
+        })
+    }
+
 
 </script>
 </body>

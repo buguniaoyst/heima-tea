@@ -20,24 +20,24 @@ import java.util.List;
 public class ZipUtils {
     public static void main(String[] args) throws  Exception{
 //        unzip("F:\\pro-info.zip","F:/test/");
-
+//        File zipFile = new File("F://test//5/1515142724280pro-info.zip");
+//        System.out.println(zipFile.getParent());
+        unzip("F://test//5/1515142724280pro-info.zip", "F:\\test\\6\\111111111111111111\\source");
     }
 
 
 
     public static String getTreeNodes(String path) {
-        String realZipName = "";
+        String realZipName = "source";
         //先将zip解压到同名的目录
-        String savePath = path.substring(0, path.lastIndexOf("/"));
-         unzip(path, savePath ,realZipName);
+        File zipFile = new File(path);
+
+        String savePath = zipFile.getParent() + File.separator + realZipName;
+         unzip(path, savePath);
 
 
         List<Object> l = new ArrayList<Object>();
-        String dir = savePath+realZipName;
-        getFilesTree(new File(dir), l);
-        for (Object o : l){
-            System.out.println(o);
-        }
+        getFilesTree(new File(savePath), l);
 
         ObjectMapper objectMapper = new ObjectMapper();
         String json = null;
@@ -47,7 +47,6 @@ public class ZipUtils {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        System.out.println(json);
         return  json;
     }
 
@@ -163,14 +162,12 @@ public class ZipUtils {
      * @param zipFilePath zip文件路径, 如 "D:/test/aa.zip"
      * @param saveFileDir 解压后的文件存放路径, 如"D:/test/" ()
      */
-    public static void unzip(String zipFilePath, String saveFileDir,String realZipName) {
-        if(!saveFileDir.endsWith("\\") && !saveFileDir.endsWith("/") ){
-            saveFileDir += File.separator;
-        }
+    public static void unzip(String zipFilePath, String saveFileDir) {
         File dir = new File(saveFileDir);
-        if(!dir.exists()){
-            dir.mkdirs();
+        if(dir.exists()){
+            return ;
         }
+        dir.mkdirs();
         File file = new File(zipFilePath);
         if (file.exists()) {
             InputStream is = null;
@@ -182,11 +179,8 @@ public class ZipUtils {
                 while ((archiveEntry = zais.getNextEntry()) != null) {
                     // 获取文件名
                     String entryFileName = archiveEntry.getName();
-                    if (StringUtils.isBlank(realZipName)) {
-                        realZipName = entryFileName;
-                    }
                     // 构造解压出来的文件存放路径
-                    String entryFilePath = saveFileDir + entryFileName;
+                    String entryFilePath = saveFileDir + File.separator+ entryFileName;
                     OutputStream os = null;
                     try {
                         // 把解压出来的文件写到指定路径
@@ -268,7 +262,6 @@ public class ZipUtils {
         }
 
     }
-
 
 
 

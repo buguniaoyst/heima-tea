@@ -197,6 +197,13 @@ public class TestController {
 
         //根据classId,testId,stuId查询答案信息
         List<AnswerInfo> answerInfoList = answerInfoService.queryAnswerInfoListByClassIdAndTestIdAndStuId(classId, testId, stuId);
+        if (null != answerInfoList && answerInfoList.size() > 0) {
+            for (AnswerInfo answerInfo : answerInfoList) {
+                String zipPath = answerInfo.getZipPath();
+                String s = zipPath.replaceAll("\\\\", "/");
+                answerInfo.setZipPath(s);
+            }
+        }
         Map<Object, Object> result = new HashMap<>();
         if (null != answerInfoList && answerInfoList.size() > 0) {
             result.put("answerInfoList", answerInfoList);
@@ -249,6 +256,7 @@ public class TestController {
 
         return true;
     }
+
 
 
 
