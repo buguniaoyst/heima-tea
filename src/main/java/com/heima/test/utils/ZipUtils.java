@@ -257,19 +257,6 @@ public class ZipUtils {
             dv.setName(f.getName());
             dv.setAlias(f.getPath());
             dv.setSpread(false);
-            if (f.isFile()) {
-                try {
-                String str  = null;
-                BufferedReader  br=new BufferedReader(new FileReader(f));
-                do{
-                        str += br.readLine()+"</br>";
-                    }while(br.read()!=-1);
-                dv.setFileContent(str);
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-            }
-
             if(f.isDirectory() && f.listFiles().length != 0){
                 List<Object> l = new ArrayList<Object>();
                 getFilesTree(f,l);

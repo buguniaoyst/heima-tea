@@ -130,6 +130,14 @@ public class AnswerInfoController {
     }
 
 
+    @RequestMapping(value = "getFileContent",method = RequestMethod.POST)
+    @ResponseBody
+    public String getFileContent(String filePath) {
+        if (StringUtils.isNotBlank(filePath)) {
+           return answerInfoService.getFileContent(filePath);
+        }
+        return  null;
 
+    }
 
 }

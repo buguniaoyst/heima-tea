@@ -237,7 +237,16 @@
                     , nodes: children
                     ,click:function (node) {
                         console.log(node);
-                        $("#codeContent").html(node.fileContent);
+                        //判断 点击节点如果是文件就显示文件内容
+                        if(node.children.length == 0 ){
+                            $.post("${pageContext.request.contextPath}/rest/answer/getFileContent",{filePath:node.alias},function (data) {
+                                if(data) {
+                                    $("#codeContent").html(data);
+                                }
+                            })
+                        }
+
+
                     }
                 });
             });

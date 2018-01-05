@@ -15,9 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 @Service
@@ -100,5 +98,20 @@ public class AnswerInfoService extends  BaseService<AnswerInfo> {
     }
 
 
-
+    public String getFileContent(String filePath) {
+        File f = new File(filePath);
+        if (f.isFile()) {
+                try {
+                String str  = null;
+                BufferedReader br=new BufferedReader(new FileReader(f));
+                do{
+                        str += br.readLine()+"</br>";
+                    }while(br.read()!=-1);
+               return  str;
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+            return null;
+    }
 }
