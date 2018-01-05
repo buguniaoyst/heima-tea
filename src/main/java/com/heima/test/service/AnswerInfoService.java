@@ -8,7 +8,9 @@ import com.heima.test.domain.AnswerInfo;
 import com.heima.test.domain.ScoreInfo;
 import com.heima.test.domain.User;
 import com.heima.test.utils.ZipUtils;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.csource.fastdfs.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,17 +103,16 @@ public class AnswerInfoService extends  BaseService<AnswerInfo> {
     public String getFileContent(String filePath) {
         File f = new File(filePath);
         if (f.isFile()) {
-                try {
-                String str  = null;
-                BufferedReader br=new BufferedReader(new FileReader(f));
-                do{
-                        str += br.readLine()+"</br>";
-                    }while(br.read()!=-1);
-               return  str;
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
+            try {
+                String str =  FileUtils.readFileToString(f, "UTF-8");
+                return StringEscapeUtils.escapeHtml4(str);
+            }catch (Exception e){
+                e.printStackTrace();
+                return null;
             }
+
+        }
+
             return null;
     }
 }

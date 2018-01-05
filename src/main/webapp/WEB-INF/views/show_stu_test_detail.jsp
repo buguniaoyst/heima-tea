@@ -3,6 +3,7 @@
 <head>
     <title>试卷管理列表</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta charset="UTF-8">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/layui/css/layui.css" media="all">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/global.css" media="all">
     <script src="${pageContext.request.contextPath}/lib/jquery-1.8.3.js"></script>
@@ -24,9 +25,7 @@
         </div>
         <div>
             <ul id="demo"></ul>
-            <pre class="layui-code" id="codeContent">
 
-            </pre>
         </div>
 
         <div class="layui-form-item">
@@ -36,6 +35,9 @@
     </form>
 </div>
 <script src="${pageContext.request.contextPath}/json/tree.js"></script>
+<link href="${pageContext.request.contextPath}/lib/highlight/styles/obsidian.css" rel="stylesheet">
+<script src="${pageContext.request.contextPath}/lib/highlight/highlight.pack.js"></script>
+<script >hljs.initHighlightingOnLoad();</script>
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 <script>
     layui.use(['laypage', 'layer','laydate','jquery','form','tree'],function() {
@@ -122,13 +124,17 @@
                 "            </div>\n" +
                 "        </div>")
             var scoreSpan = $(" <div class=\"layui-form-item\">\n" +
-                "    <div class=\"layui-input-inline\">\n" +
-                "      <input type='button' value='查看附件' onclick="+'showZipTree("'+answer.zipPath+'")'+"  class=\"layui-btn layui-btn-warm\">\n" +
-                "    </div>\n" +  "    <label class=\"layui-form-label\">综合评分：</label>\n" +
+                  "    <label class=\"layui-form-label\">综合评分：</label>\n" +
                 "    <div class=\"layui-input-inline\">\n" +
                 "      <input type=\"number\" name=\"itemScore\" lay-verify=\"required\" placeholder=\"请输入分值\" autocomplete=\"off\" class=\"layui-input\">\n" +
                 "    </div>\n" +
-                "  </div>")
+                "  </div>");
+            var openZipDiv = $("    <div class=\"layui-input-inline\">\n" +
+                             "      <input type='button' value='打开附件' onclick="+'showZipTree("'+answer.zipPath+'")'+"  class=\"layui-btn layui-btn-warm\">\n" +
+                            "    </div>\n" );
+            if(answer.zipPath) {
+                openZipDiv.appendTo(scoreSpan);
+            }
             _div.appendTo($("#itemArea"));
             scoreSpan.appendTo(_div);
         }
@@ -230,10 +236,12 @@
         $.post("${pageContext.request.contextPath}/rest/answer/getZipDirs",{zipPath:zipPath},function (data) {
             console.log(data);
             children = JSON.parse(data.nodes);
-            layui.use(['tree','layer'],function () {
+            layui.use(['tree','layer','form'],function () {
+                var form = layui.form;
                 layui.tree({
-                    encode: true
-                    ,elem: '#demo' //传入元素选择器
+                    elem: '#demo' //传入元素选择器
+                    ,skin: 'notepad'
+                    ,encode:true
                     , nodes: children
                     ,click:function (node) {
                         console.log(node);
@@ -241,7 +249,29 @@
                         if(node.children.length == 0 ){
                             $.post("${pageContext.request.contextPath}/rest/answer/getFileContent",{filePath:node.alias},function (data) {
                                 if(data) {
-                                    $("#codeContent").html(data);
+                                    hljs.initHighlightingOnLoad();
+                                    var _pre = '<pre  id="codeContent">\n' +
+                                                '<code >' +data+
+                                                '</code>'
+                                                '</pre>';
+                                    layer.open({
+                                        title:'查看代码',
+                                        type: 1,
+                                        skin: 'layui-layer-demo', //样式类名
+                                        area: ['750px', '600px'],
+                                        closeBtn: 1, //不显示关闭按钮
+                                        anim: 2,
+                                        shadeClose: true, //开启遮罩关闭
+                                        content: _pre,
+                                        success: function(layero, index){
+                                            $('pre code').each(function(i, block) {
+                                                hljs.highlightBlock(block);
+                                            });
+                                            form.render();
+                                        }
+
+                                    });
+
                                 }
                             })
                         }
