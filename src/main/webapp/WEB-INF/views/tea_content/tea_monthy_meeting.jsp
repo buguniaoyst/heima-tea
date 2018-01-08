@@ -11,125 +11,66 @@
             src="${pageContext.request.contextPath}/js/common.js"></script>
 </head>
 <body>
-    <%--列表面板--%>
-    <div  class="layui-form layui-form-pane" style="margin-left: 5px">
-        <!-- 列表操作按钮组 -->
-        <div class="layui-form-item" style="margin-top: 5px;margin-bottom: -5px;">
-            <div class="layui-inline">
-                <button class="layui-btn layui-btn-radius" id="addWeeklyReport">
-                    <i class="layui-icon">&#xe608;</i>创建周报
-                </button>
+<%--列表面板--%>
+<div class="layui-form layui-form-pane" style="margin-left: 5px">
+    <!-- 列表操作按钮组 -->
+    <div class="layui-form-item" style="margin-top: 5px;margin-bottom: -5px;">
+        <div class="layui-inline">
+            <button class="layui-btn layui-btn-radius" id="addWeeklyReport">
+                <i class="layui-icon">&#xe608;</i>创建周报
+            </button>
+        </div>
+        <div class="layui-inline" style="margin-left: 500px">
+            <label class="layui-form-label">日期（From）</label>
+            <div class="layui-input-inline">
+                <input type="text" id="fromDate" name="startDate" class="layui-input" id="test1">
             </div>
-            <div class="layui-inline" style="margin-left: 500px">
-                <label class="layui-form-label">日期（From）</label>
-                <div class="layui-input-inline">
-                    <input type="text" id="fromDate" name="startDate" class="layui-input" id="test1" >
-                </div>
-                <label class="layui-form-label">至（To）</label>
-                <div class="layui-input-inline">
-                    <input type="text" id="endDate" name="endDate" class="layui-input" id="test2" >
-                </div>
-            </div>
-            <div class="layui-inline">
-                <button class="layui-btn layui-btn-radius" id="diaryQueryBtn">查询</button>
-                <button class="layui-btn layui-btn-radius" id="diaryQueryExport">导出数据</button>
+            <label class="layui-form-label">至（To）</label>
+            <div class="layui-input-inline">
+                <input type="text" id="endDate" name="endDate" class="layui-input" id="test2">
             </div>
         </div>
-        <div>
-            <table class="layui-table" lay-even="" lay-skin="row">
-                <colgroup>
-                    <col width="50" >
-                    <col width="150">
-                    <col width="150">
-                    <col width="200">
-                    <col width="400">
-                    <col width="200">
-                    <col width="200">
-                    <col>
-                </colgroup>
-                <thead>
-                <tr >
-                    <th style="text-align: center">序号</th>
-                    <th style="text-align: center">创建人</th>
-                    <th style="text-align: center">创建日期</th>
-                    <th style="text-align: center">主题</th>
-                    <th style="text-align: center">内容概要</th>
-                    <th style="text-align: center">标签</th>
-                    <th style="text-align: center">备注</th>
-                    <th style="text-align: center">操作</th>
-                </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>1989-10-14</td>
-                        <td>布谷鸟</td>
-                        <td>开班典礼优化</td>
-                        <td>通过与学工部，就业部讨论共同约定开班典礼流程</td>
-                        <td>开班，优化</td>
-                        <td>开班，优化</td>
-                        <td>查看详情</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>1989-10-14</td>
-                        <td>布谷鸟</td>
-                        <td>开班典礼优化</td>
-                        <td>通过与学工部，就业部讨论共同约定开班典礼流程</td>
-                        <td>开班，优化</td>
-                        <td>开班，优化</td>
-                        <td>查看详情</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>1989-10-14</td>
-                        <td>布谷鸟</td>
-                        <td>开班典礼优化</td>
-                        <td>通过与学工部，就业部讨论共同约定开班典礼流程</td>
-                        <td>开班，优化</td>
-                        <td>开班，优化</td>
-                        <td>查看详情</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>1989-10-14</td>
-                        <td>布谷鸟</td>
-                        <td>开班典礼优化</td>
-                        <td>通过与学工部，就业部讨论共同约定开班典礼流程</td>
-                        <td>开班，优化</td>
-                        <td>开班，优化</td>
-                        <td>查看详情</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>1989-10-14</td>
-                        <td>布谷鸟</td>
-                        <td>开班典礼优化</td>
-                        <td>通过与学工部，就业部讨论共同约定开班典礼流程</td>
-                        <td>开班，优化</td>
-                        <td>开班，优化</td>
-                        <td>查看详情</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>1989-10-14</td>
-                        <td>布谷鸟</td>
-                        <td>开班典礼优化</td>
-                        <td>通过与学工部，就业部讨论共同约定开班典礼流程</td>
-                        <td>开班，优化</td>
-                        <td>开班，优化</td>
-                        <td>查看详情</td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="layui-inline">
+            <button class="layui-btn layui-btn-radius" id="diaryQueryBtn">查询</button>
+            <button class="layui-btn layui-btn-radius" id="diaryQueryExport">导出数据</button>
         </div>
-
     </div>
+    <div>
+        <table class="layui-table" lay-even="" lay-skin="row">
+            <colgroup>
+                <col width="50">
+                <col width="150">
+                <col width="150">
+                <col width="200">
+                <col width="400">
+                <col width="200">
+                <col width="200">
+                <col>
+            </colgroup>
+            <thead>
+            <tr>
+                <th style="text-align: center">序号</th>
+                <th style="text-align: center">创建人</th>
+                <th style="text-align: center">创建日期</th>
+                <th style="text-align: center">主题</th>
+                <th style="text-align: center">内容概要</th>
+                <th style="text-align: center">标签</th>
+                <th style="text-align: center">备注</th>
+                <th style="text-align: center">操作</th>
+            </tr>
+            </thead>
+            <tbody id="tbody">
+
+            </tbody>
+        </table>
+    </div>
+    <div id="demo5" align="center"></div>
+</div>
 </body>
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 <script src="/lib/jquery-1.8.3.js"></script>
 <script>
-    layui.use(['laypage', 'layer','laydate','jquery','form'],function() {
+    layui.use(['laypage', 'layer', 'laydate', 'jquery', 'form'], function () {
         var laydate = layui.laydate;
         var laypage = layui.laypage;
         var form = layui.form;
@@ -143,7 +84,109 @@
         });
 
 
+        $(function () {
+            //初始化助教周报列表
+            $.ajax({
+                type: "GET",
+                url: "${pageContext.request.contextPath}/rest/tea_report/getTeaReportList?reportType=1",
+                //记得加双引号  T_T
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    console.log(data);
+                    nums = data.pagesize; //每页出现的数量
+                    pageData = data;
+                    var pages = Math.ceil(data.results.length / nums); //得到总页数
+                    //调用分页
+                    laypage({
+                        cont: 'demo5',
+                        pages: pages,
+                        jump: function (obj) {
+                            thisDate(obj.curr)
+                            console.log(thisDate(obj.curr));
+                            form.render();
+                        }
+                    })
+                    return;
+                },
+                error: function (err) {
+                    alert(err + "err");
+                }
+            });
+
+        });
+
+        //分页数据
+        var pageData;
+        var nums = 1; //每页出现的数量
+        var pages = 1;
+        var thisDate = function (curr) {
+            //此处只是演示，实际场景通常是返回已经当前页已经分组好的数据
+            data = pageData.results;
+            var str = '', last = curr * nums - 1;
+            last = last >= data.length ? (data.length - 1) : last;
+            var table = $("#tbody");
+            $("#tbody tr").empty();//每次进来先清空table
+            for (var i = (curr * nums - nums); i <= last; i++) {
+                var tr = $("<tr></tr>");
+                /* <th style="text-align: center">序号</th>
+                  <th style="text-align: center">创建人</th>
+                  <th style="text-align: center">创建日期</th>
+                  <th style="text-align: center">主题</th>
+                  <th style="text-align: center">内容概要</th>
+                  <th style="text-align: center">标签</th>
+                  <th style="text-align: center">备注</th>
+                  <th style="text-align: center">操作</th>*/
+
+                var td1 = $("<td align='center'>" + i + "</td>")
+                var td2 = $("<td align='center'>" + data[i].creater + "</td>");
+                var td3 = $("<td align='center'>" + formatDate(data[i].createDate) + "</td>");
+                var td4 = $("<td align='center'>" + data[i].theme + "</td>");
+                var td5 = $("<td align='center'>" + data[i].contentSummary + "</td>");
+                var td6 = $("<td align='center'>" + data[i].tags + "</td>");
+                var td7 = $("<td align='center'>" + data[i].remark + "</td>");
+                var td8 = $("<td align='center' ><button  class='layui-btn  layui-btn-radius' onclick='getWeeklyReportDetail(" + data[i].id + ")' >查看详情</button></td>");
+                td1.appendTo(tr);
+                td2.appendTo(tr);
+                td3.appendTo(tr);
+                td4.appendTo(tr);
+                td5.appendTo(tr);
+                td6.appendTo(tr);
+                td7.appendTo(tr);
+                td8.appendTo(tr);
+                tr.appendTo(table);
+            }
+            return table;
+        };
+
     });
+
+    function getWeeklyReportDetail(detailId) {
+        $.post("${pageContext.request.contextPath}/rest/tea_report/getTeaReportDetailById",{id:detailId},function (data) {
+            if(data) {
+                console.log(data);
+                layui.use(['layer','form'],function () {
+                    var form = layui.form;
+                    var contentStr = "";
+                    layer.open({
+                        title:'助教周报',
+                        type: 1,
+                        skin: 'layui-layer-demo', //样式类名
+                        area: ['650px', '300px'],
+                        closeBtn: 1, //不显示关闭按钮
+                        anim: 2,
+                        shadeClose: true, //开启遮罩关闭
+                        content: contentStr,
+                        success: function(layero, index){
+
+                        }
+
+                    });
+                });
+            }
+        })
+    }
+
 
 </script>
 </body>

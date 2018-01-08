@@ -39,4 +39,14 @@ public class TeaReportController {
         result.put("results", reportList);
         return result;
     }
+
+    @RequestMapping(value = "getTeaReportDetailById",method = RequestMethod.POST)
+    @ResponseBody
+    public TeaReport getTeaReportDetailById(Integer id) {
+       return reportService.getMapper().selectByPrimaryKey(id);
+    }
+
+
+
+
 }

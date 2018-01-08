@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="lib/layui/css/layui.css">
+    <script src="lib/jquery-1.8.3.js"></script>
+    <script src="lib/layui/layui.js"></script>
+</head>
+<body>
+<form class="layui-form layui-form-pane" method="post" action="#">
+    <div class="layui-form-item">
+        <label class="layui-form-label">会议主题</label>
+        <input class="layui-input" name="theme">
+
+    </div>
+</form>
+</body>
+<script>
+    layui.use(['laypage', 'layer','laydate','form','element'],function() {
+        var form = layui.form,
+            element = layui.element;
+
+    });
+</script>
+</html>

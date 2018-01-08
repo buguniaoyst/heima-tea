@@ -1,7 +1,6 @@
 package com.heima.test.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -13,6 +12,8 @@ import java.util.Date;
 @Entity
 @Table(name = "tea_report")
 public class TeaReport {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  Integer id;
 
     /**
