@@ -218,7 +218,6 @@
      */
     function addWeeklyReport() {
         var contentStr = '创建周报';
-
         layer.open({
             title:'助教周报',
             type: 1,
