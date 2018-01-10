@@ -106,5 +106,21 @@ public class StudentInfoController {
     }
 
 
+    @RequestMapping(value = "resetPassword",method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> resetPassword(Integer id) {
+        StudentInfo studentInfo = new StudentInfo();
+        studentInfo.setPassword("123456");
+        studentInfo.setId(id);
+        int i = studentInfoService.getMapper().updateByPrimaryKeySelective(studentInfo);
+        Map<String, Object> result = new HashMap<>();
+        result.put("result", true);
+        if (i == 0) {
+            result.put("result", false);
+        }
+        return  result;
+    }
+
+
 
 }

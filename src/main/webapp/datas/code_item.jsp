@@ -23,12 +23,6 @@
 <div class="layui-form-pane" style="margin-top: 15px;">
     <form id="jvForm" class="layui-form layui-form-pane" action="${pageContext.request.contextPath}/rest/item/addItem" method="post">
 
-       <%-- <div class="layui-form-item">
-            <label class="layui-form-label">短输入框</label>
-            <div class="layui-input-inline">
-                <input type="text" name="username" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
-            </div>
-        </div>--%>
 
         <div class="layui-form-item">
             <label class="layui-form-label">适用范围</label>
@@ -84,12 +78,6 @@
                     <option value="1111">day11-学生管理案例IO流版本</option>
                 </select>
             </div>
-            <%--<div class="layui-input-inline">
-                <select name="quiz3">
-                    <option value="">请选择县/区</option>
-                    <option value="西湖区">西湖区</option>
-                </select>
-            </div>--%>
         </div>
 
         <div class="layui-form-item" pane="">
@@ -136,22 +124,48 @@
                    <img src="#" id="showPic" style="height: 200px;width: 200px">
                </div>
            </div>
-
-
-
-
-         <div class="layui-form-item layui-form-text">
-            <label class="layui-form-label">题干信息</label>
-            <div class="layui-input-block">
-                <textarea  name="itemContent" placeholder="请输入题干信息" class="layui-textarea"></textarea>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">题干信息</label>
+                <div class="layui-input-block">
+                    <input name="itemContent" class="layui-input">
+                </div>
             </div>
-        </div>
-           <div class="layui-form-item layui-form-text">
-               <label class="layui-form-label">参考答案</label>
-               <div class="layui-input-block">
-                   <textarea  name="itemAnswer" placeholder="请输入参考答案" class="layui-textarea"></textarea>
-               </div>
-           </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">选项A</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="username" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
+                </div>
+                <div class="layui-input-inline">
+                    <input type="checkbox" name="like1" lay-skin="primary" title="是否答案" >
+                </div>
+            </div>
+            <div class="layui-form-item">
+                 <label class="layui-form-label">选项B</label>
+                 <div class="layui-input-inline">
+                     <input type="text" name="username" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
+                 </div>
+                <div class="layui-input-inline">
+                    <input type="checkbox" name="like1" lay-skin="primary" title="是否答案" >
+                </div>
+            </div>
+            <div class="layui-form-item">
+                 <label class="layui-form-label">选项C</label>
+                 <div class="layui-input-inline">
+                     <input type="text" name="username" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
+                 </div>
+                <div class="layui-input-inline">
+                    <input type="checkbox" name="like1" lay-skin="primary" title="是否答案" >
+                </div>
+            </div>
+            <div class="layui-form-item">
+                 <label class="layui-form-label">选项D</label>
+                 <div class="layui-input-inline">
+                     <input type="text" name="username" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
+                 </div>
+                <div class="layui-input-inline">
+                    <input type="checkbox" name="like1" lay-skin="primary" title="是否答案" >
+                </div>
+             </div>
         <div class="layui-form-item">
             <button class="layui-btn" lay-submit="" lay-filter="demo2">新增</button>
             <button class="layui-btn "   type="reset" >重置</button>

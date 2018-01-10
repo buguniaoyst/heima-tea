@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <head>
-    <title>助教周报</title>
+    <title>助教考试汇报</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/layui/css/layui.css" media="all">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/global.css" media="all">
@@ -17,7 +17,7 @@
     <div class="layui-form-item" style="margin-top: 5px;margin-bottom: -5px;">
         <div class="layui-inline">
             <button class="layui-btn layui-btn-radius" onclick="addWeeklyReport();">
-                <i class="layui-icon">&#xe608;</i>创建周报
+                <i class="layui-icon">&#xe608;</i>新增考试汇报
             </button>
         </div>
         <div class="layui-inline" style="margin-left: 500px">
@@ -41,8 +41,10 @@
                 <col width="50">
                 <col width="150">
                 <col width="150">
-                <col width="200">
                 <col width="400">
+                <col width="300">
+                <col width="200">
+                <col width="200">
                 <col width="200">
                 <col width="200">
                 <col>
@@ -52,9 +54,11 @@
                 <th style="text-align: center">序号</th>
                 <th style="text-align: center">创建人</th>
                 <th style="text-align: center">创建日期</th>
-                <th style="text-align: center">主题</th>
-                <th style="text-align: center">内容概要</th>
-                <th style="text-align: center">标签</th>
+                <th style="text-align: center">班级</th>
+                <th style="text-align: center">阶段考试</th>
+                <th style="text-align: center">试卷类型</th>
+                <th style="text-align: center">平均分</th>
+                <th style="text-align: center">末位平均分</th>
                 <th style="text-align: center">备注</th>
                 <th style="text-align: center">操作</th>
             </tr>
@@ -89,7 +93,7 @@
             //初始化助教周报列表
             $.ajax({
                 type: "GET",
-                url: "${pageContext.request.contextPath}/rest/tea_report/getTeaReportList?reportType=1",
+                url: "${pageContext.request.contextPath}/rest/test_result_report/list",
                 //记得加双引号  T_T
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
@@ -130,14 +134,23 @@
             $("#tbody tr").empty();//每次进来先清空table
             for (var i = (curr * nums - nums); i <= last; i++) {
                 var tr = $("<tr></tr>");
+                var testType = data[i].testType;
+                if(testType == '0'){
+                    testType = '阶段考试';
+                }else {
+                    testType = '课后测试';
+                }
+
                 var td1 = $("<td align='center'>" + i + "</td>")
                 var td2 = $("<td align='center'>" + data[i].creater + "</td>");
                 var td3 = $("<td align='center'>" + formatDate(data[i].createDate) + "</td>");
-                var td4 = $("<td align='center'>" + data[i].theme + "</td>");
-                var td5 = $("<td align='center'>" + data[i].contentSummary + "</td>");
-                var td6 = $("<td align='center'>" + data[i].tags + "</td>");
-                var td7 = $("<td align='center'>" + data[i].remark + "</td>");
-                var td8 = $("<td align='center' ><button  class='layui-btn  layui-btn-radius' onclick='getWeeklyReportDetail(" + data[i].id + ")' >查看详情</button></td>");
+                var td4 = $("<td align='center'>" + data[i].className + "</td>");
+                var td5 = $("<td align='center'>" + data[i].testName + "</td>");
+                var td6 = $("<td align='center'>" + testType + "</td>");
+                var td7 = $("<td align='center'>" + data[i].avgScore + "</td>");
+                var td8 = $("<td align='center'>" + data[i].moweiAvgScore + "</td>");
+                var td9 = $("<td align='center'>" + data[i].remark + "</td>");
+                var td10 = $("<td align='center' ><button  class='layui-btn  layui-btn-radius' onclick='getWeeklyReportDetail(" + data[i].id + ")' >查看详情</button></td>");
                 td1.appendTo(tr);
                 td2.appendTo(tr);
                 td3.appendTo(tr);
@@ -146,6 +159,8 @@
                 td6.appendTo(tr);
                 td7.appendTo(tr);
                 td8.appendTo(tr);
+                td9.appendTo(tr);
+                td10.appendTo(tr);
                 tr.appendTo(table);
             }
             return table;

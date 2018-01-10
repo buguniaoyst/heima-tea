@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <head>
-    <title>试卷管理列表</title>
+    <title>组卷管理</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/layui/css/layui.css" media="all">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/global.css" media="all">
@@ -20,73 +20,96 @@
 <body>
 <!-- 列表面板 -->
 <div class="layui-form-pane" style="margin-top: 15px;">
-    <!-- 列表操作按钮组 -->
-   <%-- <div class="layui-form-item">
-        <button id="exportbtn" class="layui-btn layui-btn-warm" lay-filter="exportpro">导出数据</button>&nbsp;&nbsp;&nbsp;&nbsp;
-    </div>--%>
-    <div class="layui-form" >
-        <table class="layui-table" style="height: 58px;" lay-even="" lay-skin="row" id="personTable">
-            <colgroup>
-                <col width="40">
-                <col width="200">
-                <col width="200">
-                <col width="400">
-                <col width="600">
-                <col width="400">
-            </colgroup>
-            <thead>
-            <tr>
-<%--
-                <th align="center"><input type="checkbox" id="layui-table-checkbox" name="id" lay-skin="primary" lay-filter="allChoose"></th>
---%>
-                <th align="center"style="padding: 0;text-align: center">序号</th>
-                <th align="center">班级类型</th>
-                <th align="center">题目类型</th>
-                <th align="center">关联课程</th>
-                <th align="center">题干</th>
-                <th align="center">题目状态</th>
-            </tr>
-            </thead>
-            <tbody id="tbody">
-            </tbody>
-        </table>
-    </div>
-    <div id="demo5" align="center"></div>
-    <!-- <div id="demo7" align="center"></div> -->
+    <form class="layui-form layui-form-pane" action="${pageContext.request.contextPath}/rest/item/addTestItem" method="post">
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">试卷名称</label>
+            <div class="layui-input-inline">
+               <input type="text" name="testName" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">课程模块</label>
+            <div class="layui-input-inline">
+                <select name="quiz1">
+                    <option value="">请选择课程模块</option>
+                    <option value="11" selected="">JavaSE初级</option>
+                    <option value="12" >JavaSE高级</option>
+                    <option value="13" >MySQL+JDBC</option>
+                    <option value="14" >前端</option>
+                    <option value="15" >JavaWeb核心</option>
+                    <option value="16" >Estore</option>
+                    <option value="17" >Linux</option>
+                </select>
+            </div>
+            <div class="layui-input-inline">
+                <select name="testSourcesId">
+                    <option value="">请选择课程</option>
+                    <option value="1101" selected="">day01-搭建环境、数据类型</option>
+                    <option value="1102">day02-Eclipse-运算符-键盘录入</option>
+                    <option value="1103">day03-选择、循环语句</option>
+                    <option value="1104">day04-Random-数组</option>
+                    <option value="1105">day05-方法</option>
+                    <option value="1106">day06-断点调试-练习</option>
+                    <option value="1107">day07-面向对象-private-this-构造方法</option>
+                    <option value="1108">day08-String-StringBuilder</option>
+                    <option value="1109">day09-对象数组-ArrayList-学生管理案例</option>
+                    <option value="1110">day10-字符流-字符缓冲流</option>
+                    <option value="1111">day11-学生管理案例IO流版本</option>
+                </select>
+            </div>
+        </div>
+        <div>
+            <table class="layui-table" style="height: 58px;" lay-even="" lay-skin="row" id="personTable">
+                <colgroup>
+                    <col width="40">
+                    <col width="200">
+                    <col width="200">
+                    <col width="400">
+                    <col width="600">
+                    <col width="400">
+                </colgroup>
+                <thead>
+                <tr>
+                    <th align="center"style="padding: 0;text-align: center">序号</th>
+                    <th align="center">班级类型</th>
+                    <th align="center">题目类型</th>
+                    <th align="center">关联课程</th>
+                    <th align="center">题干</th>
+                    <th align="center">题目状态</th>
+                </tr>
+                </thead>
+                <tbody id="tbody">
+                </tbody>
+            </table>
+        </div>
+        <div id="demo5" align="center"></div>
+        <div class="layui-form-item">
+            <button class="layui-btn" id="createTestItem" lay-submit="" lay-filter="demo2">立即组卷</button>
+            <button class="layui-btn "   type="reset" >重置</button>
+        </div>
+    </form>
+
 </div>
+<script src="${pageContext.request.contextPath}/js/jquery-1.9.1.js"></script>
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
-<script src="/lib/jquery-1.8.3.js"></script>
 <script>
     layui.use(['laypage', 'layer','laydate','jquery','form'],function() {
         var laydate = layui.laydate;
         var laypage = layui.laypage;
         var form = layui.form;
         var $ = layui.jquery;
-        var start = {
-            max : '2099-06-16 23:59:59',
-            istoday : false,
-            choose : function(datas) {
-                end.min = datas; //开始日选好后，重置结束日的最小日期
-                end.start = datas //将结束日的初始值设定为开始日
-            }
-        };
-
-        var end = {
-            max : '2099-06-16 23:59:59',
-            istoday : false,
-            choose : function(datas) {
-                start.max = datas; //结束日选好后，重置开始日的最大日期
-            }
-        };
 
 
+        //创建itemList的列表table
         //页面初始化的时候加载分页数据
         $(function(){
-            //alert("页面初始化了.......");
+            //加载题目;
             $.ajax({
-                type: "GET",
-                url: "${pageContext.request.contextPath}/rest/item/itemList",
+                type: "POST",
+                url: "${pageContext.request.contextPath}/rest/item/queryItem",
                 //记得加双引号  T_T
+                data:{classType:"0"},
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (data) {
@@ -110,8 +133,6 @@
                     alert(err + "err");
                 }
             });
-
-
         })
 
         //分页数据
@@ -135,37 +156,30 @@
                 var itemType;
                 if (data[i].classType == '0') {
                     classType = "基础班";
-
                 }else{
                     classType = "就业班";
                 }
-
                 if (data[i].itemStatus == '0') {
                     itemStatus = "禁用";
-
                 }else{
                     itemStatus = "启用";
                 }
-
                 if (data[i].itemType == '0') {
-                    itemType = "选择题";
-
-                }else if(data[i].itemType == '1'){
                     itemType = "编程题";
+                }else if(data[i].itemType == '1'){
+                    itemType = "单选题";
                 }else if(data[i].itemType == '2'){
-                    itemType = "填空题";
-                }else if(data[i].itemType == '3'){
-                    itemType = "判断题";
+                    itemType = "多选题";
                 }else{
                     itemType = "其他";
                 }
 
-                var td0 = $("<td align='center'>"+i+"</td>")
+                var td0 = $("<td align='center' ><input type='checkbox'  name='itemId' value="+data[i].id+"></input></td>")
                 var td1 = $("<td align='center'>"+classType+"</td>")
                 var td2 = $("<td align='center'>"+itemType+"</td>");
                 var td3 = $("<td align='center'>"+data[i].itemSourceId+"</td>");
                 var  td4 = $("<td align='center' >"+data[i].itemContent+"</td>");
-                var  td5 = $("<td align='center' ><button  class='layui-btn  layui-btn-radius' >"+itemStatus+"</button></td>");
+                var  td5 = $("<td align='center' ><input type='button'  class='layui-btn  layui-btn-radius' value="+itemStatus+" /></td>");
                 td0.appendTo(tr);
                 td1.appendTo(tr);
                 td2.appendTo(tr);
@@ -174,31 +188,11 @@
                 td5.appendTo(tr);
                 tr.appendTo(table);
             }
+
             return table;
         };
 
-
-        /**
-         * 导出统计数据
-         */
-        $('#exportbtn').click(function () {
-          var form =  $("<form>").attr({
-               "action":"/rest/pro/export_prolist",
-               "method":"post"
-           });
-            $(document.body).append(form);
-            form.submit();
-        });
-
-
     });
-
-    //查看分数详情
-    function showScoreDetail(testid) {
-        //location.href = "${pageContext.request.contextPath}/rest/test/showScoreDetail?testId="+testid;
-        location.href = "${pageContext.request.contextPath}/rest/score_detail?testId="+testid;
-    }
-
 
 </script>
 </body>

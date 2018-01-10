@@ -38,27 +38,19 @@ var navs = [{
     "href": "",
     "spread": false,
     "children": [  {
-        "title": "新增题目",
+        "title": "题目管理",
         "icon": "&#xe60a;",
-        "href": "/rest/item_add"
-    }, {
-        "title": "题库列表",
-        "icon": "&#xe60a;",
-        "href": "/rest/item_list"
+        "href": "/rest/item_info/item_list"
     }, {
         "title": "组卷管理",
         "icon": "&#xe60a;",
-        "href": "/rest/item_test_add"
+        "href": "/rest/item_test/item_test_add"
     }, {
-        "title": "随堂试卷列表",
-        "icon": "&#xe60a;",
-        "href": "/rest/test_source_list"
-    }, {
-        "title": "安排测试",
+        "title": "测试分配",
         "icon": "&#xe60a;",
         "href": "/rest/item_test_create"
     }, {
-        "title": "测试结果",
+        "title": "试卷批阅",
         "icon": "&#xe60a;",
         "href": "/rest/item_test_answer_list"
     }]
@@ -103,6 +95,10 @@ var navs = [{
         "title": "助教周报",
         "icon": "&#xe60a;",
         "href": "/rest/tea_content/assi_weekly_report"
+    }, {
+        "title": "考试结果分析",
+        "icon": "&#xe60a;",
+        "href": "/rest/tea_content/assi_test_report"
     }, {
         "title": "学员班会",
         "icon": "&#xe613;",

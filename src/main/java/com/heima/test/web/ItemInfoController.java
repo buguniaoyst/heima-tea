@@ -44,7 +44,7 @@ public class ItemInfoController {
     @RequestMapping(value = "addItem",method = RequestMethod.POST)
     public String addItem(ItemInfo itemInfo){
         itemInfoService.save(itemInfo);
-        return "redirect:/rest/item_list";
+        return "redirect:/rest/item_info/item_list";
     }
 
 
@@ -57,7 +57,7 @@ public class ItemInfoController {
             itemParam.setClassType(itemInfo.getItemType());
         }
         List<ItemInfo> itemInfos = itemInfoService.queryListByWhere(itemParam);
-        result.put("pagesize", 20);
+        result.put("pagesize", 10);
         result.put("results", itemInfos);
         return result;
     }

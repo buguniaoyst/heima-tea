@@ -218,7 +218,9 @@
                 var td2 = $("<td align='center'>"+studentName+"</td>");
                 var td3 =  $("<td align='center'>"+studentNo+"</td>");
                 var td4 = $("<td align='center' >"+sex+"</td>");
-                var td5 = $("<td align='center' ><button class='layui-btn layui-btn-sm' onclick='editStudentfo(this);' studentId="+data[i].id+"><i class='layui-icon' >&#xe642;</i> </button> <button class='layui-btn layui-btn-sm' id='showClassBtn' classId="+data[i].id+"><i class='layui-icon'>&#xe615;</i> </button><button class='layui-btn layui-btn-sm' id='deleteClassBtn' classId="+data[i].id+"> <i class='layui-icon'>&#xe640;</i> </button></td>");
+                var td5 = $("<td align='center' ><button class='layui-btn layui-btn-sm' onclick='editStudentfo(this);' studentId="+data[i].id+"><i class='layui-icon' >&#xe642;</i> </button> <button class='layui-btn layui-btn-sm' id='showClassBtn' classId="+data[i].id+"><i class='layui-icon'>&#xe615;</i> </button>" +
+                    "<button class='layui-btn layui-btn-sm' id='deleteClassBtn' classId="+data[i].id+"> <i class='layui-icon'>&#xe640;</i> </button>" +
+                    "<button class='layui-btn layui-btn-sm' id='resetPasswordBtn' onclick='resetStuPassword(this);' stuId="+data[i].id+"> 重置密码 </button></td>");
                 td1.appendTo(tr);
                 td2.appendTo(tr);
                 td3.appendTo(tr);
@@ -352,6 +354,26 @@ function editStudentfo(target) {
         }
         $("#jvForm").ajaxSubmit(options);
     }
+
+
+    /**
+     * 重置学员密码
+     * @param target
+     */
+    function resetStuPassword(target) {
+        layer.alert($(target).attr('stuId'));
+        var id = $(target).attr('stuId');
+        $.post("${pageContext.request.contextPath}/rest/student/resetPassword",{id:id},function (data) {
+            data = JSON.parse(data);
+            if(data.result) {
+                layer.alert("密码重置成功，新密码为：123456");
+            }else {
+                layer.alert("密码重置失败，请联系管理员");
+            }
+
+        })
+    }
+
 
 
 </script>
